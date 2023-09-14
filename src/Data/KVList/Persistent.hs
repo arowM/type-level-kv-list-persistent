@@ -23,7 +23,7 @@ instance
   ( RawSql (Single v1)
   , KnownSymbol k1
   ) => RawSql (KVList '[ k1 := v1 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f (Single (KVList.get (ListKey :: ListKey k1) r :: v1))
   rawSqlColCountReason r =
     rawSqlColCountReason (Single (KVList.get (ListKey :: ListKey k1) r :: v1))
@@ -39,7 +39,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2
   ) => RawSql (KVList '[ k1 := v1, k2 := v2 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -50,8 +50,7 @@ instance
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
       )
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
+    (Single v1, Single v2) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -63,7 +62,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2 , k3 := v3 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -78,10 +77,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -94,7 +90,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -111,11 +107,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -129,7 +121,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -148,12 +140,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -168,7 +155,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -189,13 +176,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -211,7 +192,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -234,14 +215,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -258,7 +232,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -283,15 +257,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -309,7 +275,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -336,16 +302,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -364,7 +321,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -393,17 +350,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -423,7 +370,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -454,18 +401,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -486,7 +422,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -519,19 +455,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -553,7 +477,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -588,20 +512,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -624,7 +535,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -661,21 +572,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -699,7 +596,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -738,22 +635,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -778,7 +660,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -819,23 +701,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -861,7 +727,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -904,24 +770,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -948,7 +797,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -993,25 +842,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1039,7 +870,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1086,26 +917,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1134,7 +946,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1183,27 +995,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1233,7 +1025,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1284,28 +1076,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1336,7 +1107,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1389,29 +1160,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1443,7 +1192,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1498,30 +1247,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1554,7 +1280,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1611,31 +1337,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1669,7 +1371,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1728,32 +1430,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1788,7 +1465,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1849,33 +1526,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -1911,7 +1562,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -1974,34 +1625,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2038,7 +1662,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2103,35 +1727,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2169,7 +1765,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2236,36 +1832,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2304,7 +1871,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2373,37 +1940,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2443,7 +1980,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2514,38 +2051,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2586,7 +2092,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2659,39 +2165,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2733,7 +2207,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2808,40 +2282,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -2884,7 +2325,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -2961,41 +2402,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -3039,7 +2446,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -3118,42 +2525,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -3198,7 +2570,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -3279,43 +2651,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -3361,7 +2697,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -3444,44 +2780,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -3528,7 +2827,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -3613,45 +2912,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -3699,7 +2960,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -3786,46 +3047,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -3874,7 +3096,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -3963,47 +3185,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -4053,7 +3235,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -4144,48 +3326,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -4236,7 +3377,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -4329,49 +3470,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -4423,7 +3522,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -4518,50 +3617,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -4614,7 +3670,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -4711,51 +3767,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -4809,7 +3821,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -4908,52 +3920,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -5008,7 +3975,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -5109,53 +4076,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -5211,7 +4132,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -5314,54 +4235,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -5418,7 +4292,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -5523,55 +4397,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -5629,7 +4455,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -5736,56 +4562,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -5844,7 +4621,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -5953,57 +4730,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -6063,7 +4790,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -6174,58 +4901,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -6286,7 +4962,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -6399,59 +5075,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -6513,7 +5137,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -6628,60 +5252,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -6744,7 +5315,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -6861,61 +5432,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -6979,7 +5496,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -7098,62 +5615,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -7218,7 +5680,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -7339,63 +5801,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -7461,7 +5867,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56, KVList.HasKey k57 kvs v57
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -7584,64 +5990,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-    (Single v57) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56, Single v57) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -7708,7 +6057,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56, KVList.HasKey k57 kvs v57, KVList.HasKey k58 kvs v58
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -7833,65 +6182,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-    (Single v57) <- rawSqlProcessRow vs
-    (Single v58) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56, Single v57, Single v58) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -7959,7 +6250,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56, KVList.HasKey k57 kvs v57, KVList.HasKey k58 kvs v58, KVList.HasKey k59 kvs v59
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -8086,66 +6377,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-    (Single v57) <- rawSqlProcessRow vs
-    (Single v58) <- rawSqlProcessRow vs
-    (Single v59) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56, Single v57, Single v58, Single v59) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -8214,7 +6446,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59, k60 := v60 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56, KVList.HasKey k57 kvs v57, KVList.HasKey k58 kvs v58, KVList.HasKey k59 kvs v59, KVList.HasKey k60 kvs v60
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59, k60 := v60 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -8343,67 +6575,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-    (Single v57) <- rawSqlProcessRow vs
-    (Single v58) <- rawSqlProcessRow vs
-    (Single v59) <- rawSqlProcessRow vs
-    (Single v60) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56, Single v57, Single v58, Single v59, Single v60) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -8473,7 +6645,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59, k60 := v60, k61 := v61 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56, KVList.HasKey k57 kvs v57, KVList.HasKey k58 kvs v58, KVList.HasKey k59 kvs v59, KVList.HasKey k60 kvs v60, KVList.HasKey k61 kvs v61
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59, k60 := v60, k61 := v61 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -8604,68 +6776,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-    (Single v57) <- rawSqlProcessRow vs
-    (Single v58) <- rawSqlProcessRow vs
-    (Single v59) <- rawSqlProcessRow vs
-    (Single v60) <- rawSqlProcessRow vs
-    (Single v61) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56, Single v57, Single v58, Single v59, Single v60, Single v61) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
@@ -8736,7 +6847,7 @@ instance
   , kvs ~ '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59, k60 := v60, k61 := v61, k62 := v62 ]
   , KVList.HasKey k1 kvs v1, KVList.HasKey k2 kvs v2, KVList.HasKey k3 kvs v3, KVList.HasKey k4 kvs v4, KVList.HasKey k5 kvs v5, KVList.HasKey k6 kvs v6, KVList.HasKey k7 kvs v7, KVList.HasKey k8 kvs v8, KVList.HasKey k9 kvs v9, KVList.HasKey k10 kvs v10, KVList.HasKey k11 kvs v11, KVList.HasKey k12 kvs v12, KVList.HasKey k13 kvs v13, KVList.HasKey k14 kvs v14, KVList.HasKey k15 kvs v15, KVList.HasKey k16 kvs v16, KVList.HasKey k17 kvs v17, KVList.HasKey k18 kvs v18, KVList.HasKey k19 kvs v19, KVList.HasKey k20 kvs v20, KVList.HasKey k21 kvs v21, KVList.HasKey k22 kvs v22, KVList.HasKey k23 kvs v23, KVList.HasKey k24 kvs v24, KVList.HasKey k25 kvs v25, KVList.HasKey k26 kvs v26, KVList.HasKey k27 kvs v27, KVList.HasKey k28 kvs v28, KVList.HasKey k29 kvs v29, KVList.HasKey k30 kvs v30, KVList.HasKey k31 kvs v31, KVList.HasKey k32 kvs v32, KVList.HasKey k33 kvs v33, KVList.HasKey k34 kvs v34, KVList.HasKey k35 kvs v35, KVList.HasKey k36 kvs v36, KVList.HasKey k37 kvs v37, KVList.HasKey k38 kvs v38, KVList.HasKey k39 kvs v39, KVList.HasKey k40 kvs v40, KVList.HasKey k41 kvs v41, KVList.HasKey k42 kvs v42, KVList.HasKey k43 kvs v43, KVList.HasKey k44 kvs v44, KVList.HasKey k45 kvs v45, KVList.HasKey k46 kvs v46, KVList.HasKey k47 kvs v47, KVList.HasKey k48 kvs v48, KVList.HasKey k49 kvs v49, KVList.HasKey k50 kvs v50, KVList.HasKey k51 kvs v51, KVList.HasKey k52 kvs v52, KVList.HasKey k53 kvs v53, KVList.HasKey k54 kvs v54, KVList.HasKey k55 kvs v55, KVList.HasKey k56 kvs v56, KVList.HasKey k57 kvs v57, KVList.HasKey k58 kvs v58, KVList.HasKey k59 kvs v59, KVList.HasKey k60 kvs v60, KVList.HasKey k61 kvs v61, KVList.HasKey k62 kvs v62
   ) => RawSql (KVList '[ k1 := v1, k2 := v2, k3 := v3, k4 := v4, k5 := v5, k6 := v6, k7 := v7, k8 := v8, k9 := v9, k10 := v10, k11 := v11, k12 := v12, k13 := v13, k14 := v14, k15 := v15, k16 := v16, k17 := v17, k18 := v18, k19 := v19, k20 := v20, k21 := v21, k22 := v22, k23 := v23, k24 := v24, k25 := v25, k26 := v26, k27 := v27, k28 := v28, k29 := v29, k30 := v30, k31 := v31, k32 := v32, k33 := v33, k34 := v34, k35 := v35, k36 := v36, k37 := v37, k38 := v38, k39 := v39, k40 := v40, k41 := v41, k42 := v42, k43 := v43, k44 := v44, k45 := v45, k46 := v46, k47 := v47, k48 := v48, k49 := v49, k50 := v50, k51 := v51, k52 := v52, k53 := v53, k54 := v54, k55 := v55, k56 := v56, k57 := v57, k58 := v58, k59 := v59, k60 := v60, k61 := v61, k62 := v62 ]) where
-  rawSqlCols f r =
+  rawSqlCols f ~r =
     rawSqlCols f
       ( Single (KVList.get (ListKey :: ListKey k1) r :: v1)
       , Single (KVList.get (ListKey :: ListKey k2) r :: v2)
@@ -8869,69 +6980,7 @@ instance
       )
 
   rawSqlProcessRow vs = do
-    (Single v1) <- rawSqlProcessRow vs
-    (Single v2) <- rawSqlProcessRow vs
-    (Single v3) <- rawSqlProcessRow vs
-    (Single v4) <- rawSqlProcessRow vs
-    (Single v5) <- rawSqlProcessRow vs
-    (Single v6) <- rawSqlProcessRow vs
-    (Single v7) <- rawSqlProcessRow vs
-    (Single v8) <- rawSqlProcessRow vs
-    (Single v9) <- rawSqlProcessRow vs
-    (Single v10) <- rawSqlProcessRow vs
-    (Single v11) <- rawSqlProcessRow vs
-    (Single v12) <- rawSqlProcessRow vs
-    (Single v13) <- rawSqlProcessRow vs
-    (Single v14) <- rawSqlProcessRow vs
-    (Single v15) <- rawSqlProcessRow vs
-    (Single v16) <- rawSqlProcessRow vs
-    (Single v17) <- rawSqlProcessRow vs
-    (Single v18) <- rawSqlProcessRow vs
-    (Single v19) <- rawSqlProcessRow vs
-    (Single v20) <- rawSqlProcessRow vs
-    (Single v21) <- rawSqlProcessRow vs
-    (Single v22) <- rawSqlProcessRow vs
-    (Single v23) <- rawSqlProcessRow vs
-    (Single v24) <- rawSqlProcessRow vs
-    (Single v25) <- rawSqlProcessRow vs
-    (Single v26) <- rawSqlProcessRow vs
-    (Single v27) <- rawSqlProcessRow vs
-    (Single v28) <- rawSqlProcessRow vs
-    (Single v29) <- rawSqlProcessRow vs
-    (Single v30) <- rawSqlProcessRow vs
-    (Single v31) <- rawSqlProcessRow vs
-    (Single v32) <- rawSqlProcessRow vs
-    (Single v33) <- rawSqlProcessRow vs
-    (Single v34) <- rawSqlProcessRow vs
-    (Single v35) <- rawSqlProcessRow vs
-    (Single v36) <- rawSqlProcessRow vs
-    (Single v37) <- rawSqlProcessRow vs
-    (Single v38) <- rawSqlProcessRow vs
-    (Single v39) <- rawSqlProcessRow vs
-    (Single v40) <- rawSqlProcessRow vs
-    (Single v41) <- rawSqlProcessRow vs
-    (Single v42) <- rawSqlProcessRow vs
-    (Single v43) <- rawSqlProcessRow vs
-    (Single v44) <- rawSqlProcessRow vs
-    (Single v45) <- rawSqlProcessRow vs
-    (Single v46) <- rawSqlProcessRow vs
-    (Single v47) <- rawSqlProcessRow vs
-    (Single v48) <- rawSqlProcessRow vs
-    (Single v49) <- rawSqlProcessRow vs
-    (Single v50) <- rawSqlProcessRow vs
-    (Single v51) <- rawSqlProcessRow vs
-    (Single v52) <- rawSqlProcessRow vs
-    (Single v53) <- rawSqlProcessRow vs
-    (Single v54) <- rawSqlProcessRow vs
-    (Single v55) <- rawSqlProcessRow vs
-    (Single v56) <- rawSqlProcessRow vs
-    (Single v57) <- rawSqlProcessRow vs
-    (Single v58) <- rawSqlProcessRow vs
-    (Single v59) <- rawSqlProcessRow vs
-    (Single v60) <- rawSqlProcessRow vs
-    (Single v61) <- rawSqlProcessRow vs
-    (Single v62) <- rawSqlProcessRow vs
-
+    (Single v1, Single v2, Single v3, Single v4, Single v5, Single v6, Single v7, Single v8, Single v9, Single v10, Single v11, Single v12, Single v13, Single v14, Single v15, Single v16, Single v17, Single v18, Single v19, Single v20, Single v21, Single v22, Single v23, Single v24, Single v25, Single v26, Single v27, Single v28, Single v29, Single v30, Single v31, Single v32, Single v33, Single v34, Single v35, Single v36, Single v37, Single v38, Single v39, Single v40, Single v41, Single v42, Single v43, Single v44, Single v45, Single v46, Single v47, Single v48, Single v49, Single v50, Single v51, Single v52, Single v53, Single v54, Single v55, Single v56, Single v57, Single v58, Single v59, Single v60, Single v61, Single v62) <- rawSqlProcessRow vs
     pure $
       KVList.empty
         &= (ListKey :: ListKey k1) := v1
