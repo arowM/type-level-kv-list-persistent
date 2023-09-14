@@ -1,9 +1,8 @@
 name: type-level-kv-list-persistent
-version: "0.2.0.0"
+version: "0.2.0.1"
 category: "Data"
 synopsis: "Make Persistent Raw SQL handy with type-level-kv-list"
-description:
-  This library provides a way to use type-level-kv-list with Esqueleto.
+description: This library provides a way to use type-level-kv-list with Esqueleto.
 license: "MIT"
 author: "Sakura-chan the Goat"
 copyright: "2022 Sakura-chan the Goat"
